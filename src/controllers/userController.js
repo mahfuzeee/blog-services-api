@@ -54,7 +54,11 @@ class userController {
   async getMe(req, res) {
     try {
       const user = await userService.getUserByEmail(req.user.email);
-      res.status(200).json(user);
+      res.status(200).json({
+        success: true,
+        message: "User found",
+        user,
+      });
     } catch (error) {
       logger.error(error);
       res.status(400).json({ error: error.message });
