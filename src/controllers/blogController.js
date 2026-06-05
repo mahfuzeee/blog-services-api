@@ -19,22 +19,32 @@ class blogController {
       next(error);
     }
   }
-  async getAllBlogs(req, res) {
-    const blogs = await blogService.getAllBlogs();
-    res.status(200).json({
-      success: true,
-      message: "All blogs",
-      data: blogs,
-    });
+  async getAllBlogs(req, res, next) {
+    try {
+      const blogs = await blogService.getAllBlogs();
+      res.status(200).json({
+        success: true,
+        message: "All blogs",
+        data: blogs,
+      });
+    } catch (error) {
+      logger.error(error);
+      next(error);
+    }
   }
 
-  async getBlogById(req, res) {
-    const blog = await blogService.getBlogById(req.params.id);
-    res.status(200).json({
-      success: true,
-      message: "Blog found",
-      data: blog,
-    });
+  async getBlogById(req, res, next) {
+    try {
+      const blog = await blogService.getBlogById(req.params.id);
+      res.status(200).json({
+        success: true,
+        message: "Blog found",
+        data: blog,
+      });
+    } catch (error) {
+      logger.error(error);
+      next(error);
+    }
   }
 
   async updateBlog(req, res) {

@@ -3,12 +3,14 @@ import Blog from "../models/blog.model.js";
 //Create blog repository class
 class blogRepository {
   async getAllBlogs() {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find()
+      .populate("author", "name email")
+      .sort({ createdAt: -1 });
     return blogs;
   }
 
   async getBlogById(id) {
-    const blog = await Blog.findById(id);
+    const blog = await Blog.findById(id).populate("author", "name email");
     return blog;
   }
 
