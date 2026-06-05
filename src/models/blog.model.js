@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 //Create a schema for blog
 const blogSchema = mongoose.Schema(
   {
-    user: {
+    author: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
