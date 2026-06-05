@@ -2,20 +2,6 @@ import commentService from "../services/commentService.js";
 import logger from "../utils/logger.js";
 
 class commentController {
-  async getAllComments(req, res, next) {
-    try {
-      const comments = await commentService.getAllComments();
-      res.status(200).json({
-        success: true,
-        message: "All comments",
-        data: comments,
-      });
-    } catch (error) {
-      logger.error(error);
-      next(error);
-    }
-  }
-
   //Create a new comment
   async addComment(req, res, next) {
     const commetData = {
@@ -31,6 +17,26 @@ class commentController {
         success: true,
         message: "Comment added successfully",
         data: comment,
+      });
+    } catch (error) {
+      logger.error(error);
+      next(error);
+    }
+  }
+
+  //Get comment by blog post id
+  async getCommentsByBlogId(req, res, next) {
+    try {
+      const comments = await commentService.getCommentsByBlogId(
+        req.params.blogId,
+      );
+      if (!comments) {
+        throw new Error("Comments not found");
+      }
+      res.status(200).json({
+        success: true,
+        message: "Comments found",
+        data: comments,
       });
     } catch (error) {
       logger.error(error);
