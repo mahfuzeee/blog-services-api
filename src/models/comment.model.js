@@ -8,7 +8,7 @@ const commentSchema = mongoose.Schema(
       required: true,
       ref: "Blog",
     },
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
@@ -20,6 +20,7 @@ const commentSchema = mongoose.Schema(
     parentComment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
+      default: null,
     },
   },
   {
