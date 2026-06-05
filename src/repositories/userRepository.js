@@ -9,7 +9,12 @@ class userRepository {
   }
 
   async getUserByEmail(email) {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
+    return user;
+  }
+
+  async getUserById(id) {
+    const user = await User.findById(id);
     return user;
   }
 }

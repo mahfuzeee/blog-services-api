@@ -8,6 +8,18 @@ class userService {
   async getUserByEmail(email) {
     return await userRepository.getUserByEmail(email);
   }
+
+  async login(email, password) {
+    const user = await userRepository.getUserByEmail(email);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      throw new Error("Invalid credentials");
+    }
+    return user;
+  }
 }
 
 export default new userService();

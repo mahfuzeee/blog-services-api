@@ -20,7 +20,11 @@ class userController {
         throw new Error("User already exists");
       }
       const user = await userService.createUser(name, email, password);
-      res.status(201).json(user);
+      res.status(201).json({
+        success: true,
+        message: "User created successfully",
+        user,
+      });
     } catch (error) {
       logger.error(error);
       res.status(400).json({ error: error.message });
@@ -28,10 +32,19 @@ class userController {
   }
 
   async login(req, res) {
+    const { email, password } = req.body;
     try {
-      const user = await userService.login(req.body);
+      if (!email || !password) {
+        throw new Error("Please add all fields");
+      }
+      const user = await userService.login(email, password);
       const token = generateToken(user);
-      res.status(200).json({ token });
+      res.status(200).json({
+        success: true,
+        message: "Login successful",
+        user,
+        token,
+      });
     } catch (error) {
       logger.error(error);
       res.status(400).json({ error: error.message });

@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-    verstionKey: false,
+    versionKey: false,
   },
 );
 
@@ -35,8 +35,8 @@ userSchema.pre("save", async function (next) {
 });
 
 //Match user entered password to hashed password in database
-userSchema.methods.matchPassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
 const User = mongoose.model("User", userSchema);
